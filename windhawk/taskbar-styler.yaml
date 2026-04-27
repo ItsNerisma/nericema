@@ -1,0 +1,47 @@
+theme: DockLike
+styleConstants:
+  - MainColor=#33f09797
+  - AccentColor=#FFf09797
+  - HighlightColor=#66f09797
+controlStyles:
+  - target: Taskbar.ExperienceToggleButton#LaunchListButton[AutomationProperties.AutomationId=StartButton]
+    styles:
+      - Visibility=Collapsed
+  - target: Taskbar.TaskListLabeledButtonPanel@RunningIndicatorStates > Rectangle#RunningIndicator
+    styles:
+      - Height=4
+      - Width=4
+      - Width@ActiveRunningIndicator=0
+      - Fill=$AccentColor
+  - target: Taskbar.TaskbarFrame > Grid#RootGrid
+    styles:
+      - Margin=0,8,0,8
+      - CornerRadius=8
+      - Padding=0
+      - Background=<WindhawkBlur BlurAmount="16" TintColor="$MainColor"/>
+  - target: SystemTray.SystemTrayFrame
+    styles:
+      - Margin=4,4,4,4
+      - Background=<WindhawkBlur BlurAmount="18" TintColor="$MainColor"/>
+  - target: Grid#SystemTrayFrameGrid
+    styles:
+      - BorderThickness=0
+      - Margin=0,4,0,4
+      - Padding=0
+      - Background=<WindhawkBlur BlurAmount="18" TintColor="$MainColor"/>
+  - target: Taskbar.TaskListLabeledButtonPanel@CommonStates > Border#BackgroundElement
+    styles:
+      - Background@ActiveNormal=$AccentColor
+      - Background@MultiWindowActive=$AccentColor
+      - Background@ActivePointerOver=#fff5baba
+      - Background@InactivePointerOver=$HighlightColor
+      - Background@MultiWindowPointerOver=$HihglightColor
+  - target: Taskbar.TaskListLabeledButtonPanel > Border
+    styles:
+      - CornerRadius=8
+  - target: SystemTray.SystemTrayFrame
+    styles:
+      - Visibility=Collapsed
+themeResourceVariables:
+  - ''
+xamlDiagnosticsHandling: alert

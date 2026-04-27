@@ -1,0 +1,342 @@
+/* =========================================================
+   🎛️ VARIABLES GLOBALES (facilement modifiables)
+   ========================================================= */
+
+:root {
+  --font-name-primary: "JetBrainsMono NFP", "Segoe UI", "Noto Sans", sans-serif;
+
+  /* Couleurs */
+  --color-primary-bg: rgba(240, 151, 151, 0.3); /* 👈 fond des îlots */
+  --color-primary-hover: rgba(240, 151, 151, 0.8);
+  --color-tooltip-bg: rgba(240, 151, 151, 0.8);
+  --color-white: #ffffff;
+
+  /* Background */
+  --bg-taskbar: transparent; /* 👈 barre transparente */
+
+  /* Texte */
+  --text-normal: 14px;
+  --text-xl: 18px;
+
+  /* Radius / spacing */
+  --radius-normal: 10px;
+  --padding-widget: 6px 12px;
+  --gap-between-widgets: 8px;
+  --blur-widget: 10px;
+  --transition-soft-duration: 240ms;
+  --transition-soft-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Tooltip */
+  --padding-tooltip: 12px 24px;
+}
+
+
+/* =========================================================
+   🧱 RESET GLOBAL
+   ========================================================= */
+
+* {
+  font-size: var(--text-normal);
+  color: var(--color-white); /* 👈 texte blanc */
+  font-family: var(--font-name-primary);
+  margin: 0;
+  padding: 0;
+}
+
+
+/* =========================================================
+   🪟 BARRE PRINCIPALE
+   ========================================================= */
+
+.yasb-bar {
+  margin: 8px; /* 👈 espace autour de la barre */
+  background-color: var(--bg-taskbar);
+}
+
+
+/* =========================================================
+   📦 CONTAINER DES WIDGETS (gestion des espaces)
+   ========================================================= */
+
+.widget {
+  margin-right: var(--gap-between-widgets);
+}
+
+.widget:last-child {
+  margin-right: 0;
+}
+
+
+/* =========================================================
+   🧩 STYLE DES ÎLOTS (LE PLUS IMPORTANT)
+   ========================================================= */
+
+.widget .widget-container {
+  background: var(--color-primary-bg); /* 👈 fond des blocs */
+  border-radius: var(--radius-normal);
+  padding: var(--padding-widget);
+  transition: background-color var(--transition-soft-duration) var(--transition-soft-ease),
+              transform var(--transition-soft-duration) var(--transition-soft-ease);
+  display: flex;
+  -webkit-backdrop-filter: blur(var(--blur-widget));
+  backdrop-filter: blur(var(--blur-widget));
+}
+
+/* Hover (léger glow) */
+.widget .widget-container:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   🔤 LABELS & ICONS
+   ========================================================= */
+
+.widget .label {
+  color: var(--color-white);
+}
+
+.icon {
+  color: var(--color-white);
+}
+
+
+/* =========================================================
+   🧪 TOOLTIP
+   ========================================================= */
+
+.tooltip {
+  margin-top: 4px;
+  padding: var(--padding-tooltip);
+  background-color: var(--color-tooltip-bg);
+  border-radius: var(--radius-normal);
+  border: 1px solid rgba(240, 151, 151, 0.35);
+  color: var(--color-white);
+}
+
+
+/* =========================================================
+   🚀 APPS (plus gros icônes)
+   ========================================================= */
+
+.apps-widget .widget-container .label {
+  font-size: var(--text-xl);
+}
+
+.apps-widget .widget-container .label {
+  margin-right: 2px;
+}
+
+
+/* =========================================================
+   🪟 FENETRE ACTIVE (espace icone/texte)
+   ========================================================= */
+
+.active-window-widget .icon {
+  margin-right: 10px;
+}
+
+
+/* =========================================================
+   🔊 VOLUME (espace icone/valeur)
+   ========================================================= */
+
+.volume-widget .icon {
+  margin-right: 6px;
+}
+
+
+/* =========================================================
+   🟦 GLAZEWM WORKSPACES (carrés vide/rempli)
+   ========================================================= */
+
+.glazewm-workspaces-widget .widget-container {
+  padding: 6px 10px;
+}
+
+.glazewm-workspaces-widget .label {
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 0 2px;
+}
+
+
+/* =========================================================
+   🔴 SHUTDOWN (optionnel highlight au hover)
+   ========================================================= */
+
+.shutdown-widget .widget-container:hover {
+  background: rgba(255, 80, 80, 0.8);
+}
+
+
+/* =========================================================
+   🔎 QUICK LAUNCH (popup + recherche + resultats)
+   ========================================================= */
+
+.quick-launch-widget .icon {
+  padding: 0 2px;
+}
+
+.quick-launch-popup .container {
+  background-color: rgba(240, 151, 151, 0.22);
+  border: 1px solid rgba(240, 151, 151, 0.36);
+  border-radius: 14px;
+}
+
+.quick-launch-popup .search {
+  padding: 12px 14px;
+  background-color: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.quick-launch-popup .search .search-icon,
+.quick-launch-popup .search .search-submit-icon {
+  color: rgba(255, 255, 255, 0.72);
+  min-width: 18px;
+}
+
+.quick-launch-popup .search .search-input {
+  background: transparent;
+  border: none;
+  color: var(--color-white);
+  font-size: 15px;
+  font-family: "Segoe UI", "Noto Sans", sans-serif;
+}
+
+.quick-launch-popup .results {
+  background: transparent;
+  padding: 8px;
+}
+
+.quick-launch-popup .results-list-view {
+  background: transparent;
+  color: var(--color-white);
+  font-family: "Segoe UI", "Noto Sans", sans-serif;
+}
+
+.quick-launch-popup .results-list-view::item {
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.quick-launch-popup .results-list-view::item:hover,
+.quick-launch-popup .results-list-view::item:selected {
+  background-color: rgba(240, 151, 151, 0.22);
+}
+
+.quick-launch-popup .results-list-view .description,
+.quick-launch-popup .results-list-view .separator {
+  color: rgba(255, 255, 255, 0.7);
+  font-family: "Segoe UI", "Noto Sans", sans-serif;
+}
+
+.quick-launch-popup .preview {
+  background: rgba(0, 0, 0, 0.06);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================================
+   📶 WIFI MENU (popin réseau)
+   ========================================================= */
+
+.wifi-menu {
+  background-color: rgba(240, 151, 151, 0.18);
+  border: 1px solid rgba(240, 151, 151, 0.34);
+  border-radius: 14px;
+  min-width: 360px;
+  min-height: 380px;
+}
+
+.wifi-menu .header {
+  padding: 12px 14px;
+  font-size: 14px;
+  font-weight: 700;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.wifi-menu .error-message {
+  margin: 8px 10px 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255, 80, 80, 0.22);
+  color: var(--color-white);
+}
+
+.wifi-menu .wifi-list {
+  background: transparent;
+  margin: 6px;
+}
+
+.wifi-menu .wifi-item {
+  min-height: 42px;
+  margin: 4px 0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: transparent;
+}
+
+.wifi-menu .wifi-item:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.wifi-menu .wifi-item[active=true] {
+  background-color: rgba(240, 151, 151, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.wifi-menu .wifi-item .icon {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.wifi-menu .wifi-item .name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.wifi-menu .wifi-item .status,
+.wifi-menu .wifi-item .strength,
+.wifi-menu .wifi-item .password {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+}
+
+.wifi-menu .wifi-item .controls-container {
+  padding-top: 8px;
+}
+
+.wifi-menu .wifi-item .connect {
+  border: none;
+  border-radius: 8px;
+  padding: 6px 18px;
+  background-color: rgba(255, 255, 255, 0.14);
+}
+
+.wifi-menu .wifi-item .connect:hover {
+  background-color: rgba(255, 255, 255, 0.22);
+}
+
+.wifi-menu .footer {
+  padding: 10px 14px;
+  color: rgba(255, 255, 255, 0.72);
+  background-color: rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.wifi-menu .footer .settings-button,
+.wifi-menu .footer .refresh-icon {
+  min-width: 28px;
+  min-height: 28px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+}
+
+.wifi-menu .footer .settings-button:hover,
+.wifi-menu .footer .refresh-icon:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}

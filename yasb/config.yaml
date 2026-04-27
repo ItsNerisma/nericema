@@ -1,0 +1,195 @@
+watch_stylesheet: true
+watch_config: true
+debug: false
+bars:
+  status-bar:
+    enabled: true
+    screens: [ "*" ]
+    class_name: "yasb-bar"
+    alignment:
+      position: "top"
+      center: false
+    blur_effect:
+      enabled: false
+      acrylic: false
+      dark_mode: true
+      round_corners: false
+      border_color: None
+    window_flags:
+      always_on_top: false
+      windows_app_bar: true
+    dimensions:
+      width: "100%"
+      height: 44
+    widgets:
+      left: [
+        "glazewm_workspaces",
+        "quick_launch",
+        "systray",
+      ]
+      center: [
+        "active_window",
+      ]
+      right: [
+        "brightness",
+        "volume",
+        "wifi",
+        "clock",
+        "shutdown",
+      ]
+widgets:  
+  glazewm_workspaces:
+    type: "glazewm.workspaces.GlazewmWorkspacesWidget"
+    options:
+      offline_label: "GlazeWM Offline"
+      hide_empty_workspaces: false
+      hide_if_offline: false
+      monitor_exclusive: true
+      enable_scroll_switching: true
+      reverse_scroll_direction: false
+      app_icons:
+        enabled_populated: false
+        enabled_active: false
+      animation: false
+  
+  active_window:
+    type: "yasb.active_window.ActiveWindowWidget"
+    options:
+      label: "{win[app_name]}"
+      label_alt: "[class_name='{win[class_name]}' exe='{win[process][name]}' hwnd={win[hwnd]}]"
+      label_no_window: "Nerisma"
+      label_icon: true
+      label_icon_size: 16
+      max_length: 56
+      max_length_ellipsis: "..."
+      monitor_exclusive: true
+      
+  brightness:
+    type: "yasb.brightness.BrightnessWidget"
+    options:
+      label: "<span>{icon} {percent}%</span>"
+      label_alt: "Brightness {percent}%"
+      tooltip: true
+      brightness_toggle_level: [ 0, 50, 100 ]
+      brightness_icons: [
+        "\udb80\udcde",  # Icon for 0-25% brightness
+        "\udb80\udcdd",  # Icon for 26-50% brightness
+        "\udb80\udcdf",  # Icon for 51-75% brightness
+        "\udb80\udce0"   # Icon for 76-100% brightness
+      ]
+
+  volume:
+    type: "yasb.volume.VolumeWidget"
+    options:
+      label: "<span>{icon}</span> {level}"
+      label_alt: "Volume {volume}"
+      tooltip: true
+      volume_icons:
+        - "\ueee8"  # muted
+        - "\uf026"  # 0-10%
+        - "\uf027"  # 11-30%
+        - "\uf027"  # 31-60%
+        - "\uf028"  # 61-100%
+      callbacks:
+        on_left: "toggle_volume_menu"
+        on_right: "toggle_mute"
+
+  wifi:
+    type: "yasb.wifi.WifiWidget"
+    options:
+      label: "<span>{wifi_icon} {wifi_strength}%</span>"
+      label_alt: "{wifi_name} {wifi_strength}%"
+      update_interval: 5000
+      ethernet_label: "<span>{wifi_icon}</span>"
+      ethernet_label_alt: "{ip_addr}" 
+      callbacks:
+        on_left: "toggle_menu"
+        on_middle: "exec cmd.exe /c start ms-settings:network"
+        on_right: "toggle_label"
+
+  clock:
+    type: "yasb.clock.ClockWidget"
+    options:
+      label: "{%A %d %B %H:%M:%S}"
+      label_alt: "{%A %d %B %Y %H:%M:%S}"
+      class_name: "simple-clock"
+      locale: "fr_FR"
+      tooltip: true
+      update_interval: 1000
+
+  quick_launch:
+    type: "yasb.quick_launch.QuickLaunchWidget"
+    options:
+      label: "<span>\uea6d</span>"
+      search_placeholder: "Search applications..."
+      max_results: 30
+      show_icons: true
+      icon_size: 32
+      compact_text: true
+      compact_mode: true
+      popup:
+        width: 720
+        height: 480
+        blur: true
+        round_corners: true
+        round_corners_type: "normal"
+        border_color: "None"
+        dark_mode: true
+      providers:
+        apps:
+          enabled: true
+          prefix: "*"
+          priority: 0
+          show_recent: true
+          max_recent: 5
+          show_description: true
+        color:
+          enabled: true
+          prefix: "c:"
+          priority: 4
+        file_search:
+          enabled: true
+          prefix: "f:"
+          priority: 8
+          backend: "auto"
+          show_path: true
+      callbacks:
+        on_left: "toggle_quick_launch"
+      keybindings:
+        - keys: "ctrl+space"
+          action: "toggle_quick_launch"
+   
+  shutdown:
+      type: "yasb.custom.CustomWidget"
+      options:
+        label: "<span>⏻</span>"
+        class_name: "shutdown-widget"
+        tooltip: true
+        tooltip_label: "Shutdown"
+        callbacks:
+          on_left: "exec cmd /c shutdown /s /t 0"
+          on_right: "exec cmd /c shutdown /r /t 0"
+          on_middle: "exec cmd /c rundll32.exe powrprof.dll,SetSuspendState 0,1,0"
+      
+  systray:
+    type: "yasb.systray.SystrayWidget"
+    options:
+      icon_size: 16
+      show_unpinned: true
+      show_unpinned_button: true
+      label_collapsed: "◀"
+      label_expanded: "▶"
+      label_position: "left"
+      icons_per_row: 5
+      pin_click_modifier: "alt"   # Alt+clic pour épingler une icône
+      show_battery: false
+      show_volume: false
+      show_network: false
+      tooltip: true
+      popup:
+        blur: false
+        round_corners: false
+        alignment: "right"
+        direction: "down"
+        offset_top: 6
+        offset_left: 0
