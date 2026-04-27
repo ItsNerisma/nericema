@@ -97,7 +97,7 @@ function Create-Link {
     }
 
     if (Test-Path -LiteralPath $Target) {
-        Write-Host "Existing target found for $Label: $Target"
+        Write-Host "Existing target found for ${Label}: $Target"
         if (-not (Confirm-Backup 'Backup and replace, or skip? [B/S]')) {
             Write-Host "Skipped $Label."
             return
