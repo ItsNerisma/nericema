@@ -122,9 +122,13 @@ window_behavior:
 
 workspaces:
   - name: '1'
+    bind_to_monitor: 0
   - name: '2'
+    bind_to_monitor: 1
   - name: '3'
+    bind_to_monitor: 1
   - name: '4'
+    bind_to_monitor: 0
   - name: '5'
   - name: '6'
   - name: '7'
@@ -163,10 +167,19 @@ window_rules:
       - window_process: { regex: '(?i)chrome' }
 
 
-  # Open Unity in workspace 2 by default and switch to it.
-  - commands: ['move --workspace 2', 'focus --workspace 2', 'move-workspace --direction right']
+  # Keep Unity's GameView on a dedicated workspace on the left monitor.
+  - commands: ['move --workspace 4', 'size --width 20%']
     match:
       - window_process: { regex: '(?i)unity' }
+        window_class: { equals: 'UnityContainerWndClass' }
+        window_title: { equals: 'Game' }
+
+  # Keep the Unity editor on workspace 2 on the right monitor.
+  - commands: ['move --workspace 2', 'focus --workspace 2', 'size --width 20%']
+    match:
+      - window_process: { regex: '(?i)unity' }
+        window_class: { equals: 'UnityContainerWndClass' }
+        window_title: { not_equals: 'Game' }
 
   # Keep Rider on workspace 3 and switch to it when launched.
   - commands: ['move --workspace 3', 'focus --workspace 3', 'move-workspace --direction right']
@@ -179,17 +192,17 @@ window_rules:
       - window_process: { not_regex: '(?i)chrome|unity|rider64|zebar|powertoys|lively|excel|winword|powerpnt' }
 
 binding_modes:
-  # When enabled, the focused window can be resized via arrow keys or HJKL.
+  # When enabled, the focused window can be resized via arrow keys or JKLI.
   - name: 'resize'
     keybindings:
       - commands: ['resize --width -2%']
-        bindings: ['h', 'left']
+        bindings: ['j', 'left']
       - commands: ['resize --width +2%']
         bindings: ['l', 'right']
       - commands: ['resize --height +2%']
-        bindings: ['k', 'up']
+        bindings: ['i', 'up']
       - commands: ['resize --height -2%']
-        bindings: ['j', 'down']
+        bindings: ['k', 'down']
       # Press enter/escape to return to default keybindings.
       - commands: ['wm-disable-binding-mode --name resize']
         bindings: ['escape', 'enter']
@@ -197,23 +210,23 @@ binding_modes:
 keybindings:
   # Shift focus in a given direction.
   - commands: ['focus --direction left']
-    bindings: ['alt+h', 'alt+left', 'ctrl+alt+h', 'ctrl+alt+left']
+    bindings: ['alt+j', 'alt+left']
   - commands: ['focus --direction right']
-    bindings: ['alt+l', 'alt+right', 'ctrl+alt+l', 'ctrl+alt+right']
+    bindings: ['alt+l', 'alt+right']
   - commands: ['focus --direction up']
-    bindings: ['alt+k', 'alt+up', 'ctrl+alt+k', 'ctrl+alt+up']
+    bindings: ['alt+i', 'alt+up']
   - commands: ['focus --direction down']
-    bindings: ['alt+j', 'alt+down', 'ctrl+alt+j', 'ctrl+alt+down']
+    bindings: ['alt+k', 'alt+down']
 
   # Move focused window in a given direction.
   - commands: ['move --direction left']
-    bindings: ['alt+shift+h', 'alt+shift+left']
+    bindings: ['alt+shift+j', 'alt+shift+left']
   - commands: ['move --direction right']
     bindings: ['alt+shift+l', 'alt+shift+right']
   - commands: ['move --direction up']
-    bindings: ['alt+shift+k', 'alt+shift+up']
+    bindings: ['alt+shift+i', 'alt+shift+up']
   - commands: ['move --direction down']
-    bindings: ['alt+shift+j', 'alt+shift+down']
+    bindings: ['alt+shift+k', 'alt+shift+down']
 
   # Resize focused window by a percentage or pixel amount.
   - commands: ['resize --width -2%']
@@ -223,7 +236,7 @@ keybindings:
   - commands: ['resize --height +2%']
     bindings: ['alt+o']
   - commands: ['resize --height -2%']
-    bindings: ['alt+i']
+    bindings: ['alt+y']
 
   # As an alternative to the resize keybindings above, resize mode enables
   # resizing via arrow keys or HJKL. The binding mode is defined above with
@@ -295,25 +308,23 @@ keybindings:
 
   # Change focus to a workspace defined in `workspaces` config.
   - commands: ['focus --workspace 1']
-    bindings: ['alt+numpad1', 'ctrl+numpad1']
-  - commands: ['focus --workspace 2']
-    bindings: ['alt+numpad2', 'ctrl+numpad2']
-  - commands: ['focus --workspace 3']
-    bindings: ['alt+numpad3', 'ctrl+numpad3']
-  - commands: ['focus --workspace 3', 'move-workspace --direction right']
-    bindings: ['ctrl+shift+numpad3']
+    bindings: ['ctrl+f1']
+  - commands: ['focus --workspace 4', 'focus --workspace 2']
+    bindings: ['ctrl+f2']
+  - commands: ['focus --workspace 1', 'focus --workspace 3']
+    bindings: ['ctrl+f3']
   - commands: ['focus --workspace 4']
-    bindings: ['alt+numpad4', 'ctrl+numpad4']
+    bindings: ['ctrl+f4']
   - commands: ['focus --workspace 5']
-    bindings: ['alt+numpad5', 'ctrl+numpad5']
+    bindings: ['ctrl+f5']
   - commands: ['focus --workspace 6']
-    bindings: ['alt+numpad6', 'ctrl+numpad6']
+    bindings: ['ctrl+f6']
   - commands: ['focus --workspace 7']
-    bindings: ['alt+numpad7', 'ctrl+numpad7']
+    bindings: ['ctrl+f7']
   - commands: ['focus --workspace 8']
-    bindings: ['alt+numpad8', 'ctrl+numpad8']
+    bindings: ['ctrl+f8']
   - commands: ['focus --workspace 9']
-    bindings: ['alt+numpad9', 'ctrl+numpad9']
+    bindings: ['ctrl+f9']
 
   # Move the focused window's parent workspace to a monitor in a given
   # direction.
@@ -328,20 +339,20 @@ keybindings:
 
   # Move focused window to a workspace defined in `workspaces` config.
   - commands: ['move --workspace 1', 'focus --workspace 1']
-    bindings: ['alt+shift+numpad1']
-  - commands: ['move --workspace 2', 'focus --workspace 2']
-    bindings: ['alt+shift+numpad2']
-  - commands: ['move --workspace 3', 'focus --workspace 3']
-    bindings: ['alt+shift+numpad3']
+    bindings: ['ctrl+shift+f1']
+  - commands: ['move --workspace 2', 'focus --workspace 4', 'focus --workspace 2']
+    bindings: ['ctrl+shift+f2']
+  - commands: ['move --workspace 3', 'focus --workspace 1', 'focus --workspace 3']
+    bindings: ['ctrl+shift+f3']
   - commands: ['move --workspace 4', 'focus --workspace 4']
-    bindings: ['alt+shift+numpad4']
+    bindings: ['ctrl+shift+f4']
   - commands: ['move --workspace 5', 'focus --workspace 5']
-    bindings: ['alt+shift+numpad5']
+    bindings: ['ctrl+shift+f5']
   - commands: ['move --workspace 6', 'focus --workspace 6']
-    bindings: ['alt+shift+numpad6']
+    bindings: ['ctrl+shift+f6']
   - commands: ['move --workspace 7', 'focus --workspace 7']
-    bindings: ['alt+shift+numpad7']
+    bindings: ['ctrl+shift+f7']
   - commands: ['move --workspace 8', 'focus --workspace 8']
-    bindings: ['alt+shift+numpad8']
+    bindings: ['ctrl+shift+f8']
   - commands: ['move --workspace 9', 'focus --workspace 9']
-    bindings: ['alt+shift+numpad9']
+    bindings: ['ctrl+shift+f9']
